@@ -1,37 +1,109 @@
-.invisivel{
-    display:none;
-  }
-  .visivel{
-    display:inline;
-  }
-  .inicial {
-    text-align: center;
-    font-size: 100px;
-    background-color: lightgrey;
-    width: 150px;
-    height: 200px;
-    border: 15px solid green;
-    padding: 10px;
-    margin: 20px;
-  }
-  .acertou {
-    text-align: center;
-    color: yellow;
-    background-color: LawnGreen;
-    width: 150px;
-    height: 200px;
-    border: 15px solid yellow;
-    padding: 10px;
-    margin: 20px;
-  }
-  .errou {
-    text-align: center;
-    font-size: 100px;
-    color: white;
-    background-color: red;
-    width: 150px;
-    height: 200px;
-    border: 15px solid black;
-    padding: 10px;
-    margin: 20px;
-  }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  text-align: center;
+  padding: 20px;
+}
+
+#principal {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-weight: 700;
+}
+
+.invisivel {
+  display: none !important;
+}
+
+.visivel {
+  display: inline-block;
+}
+
+.card {
+  width: 180px;
+  height: 190px;
+  margin: 15px;
+  border-radius: 12px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border: 8px solid;
+}
+
+.inicial {
+  background: linear-gradient(145deg, #ffffff, #f1f1f1);
+  border-color: #000000;
+  color: #000000;
+  font-size: 40px;
+}
+
+.acertou {
+  background: linear-gradient(145deg, #2ecc71, #27ae60);
+  border-color: #27ae60;
+  color: white;
+}
+
+.errou {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  border-color: #c0392b;
+  color: white;
+}
+
+.card img {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+button {
+  padding: 12px 25px;
+  margin: 20px 10px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right, #3498db, #2980b9);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+#resposta {
+  font-size: 18px;
+  margin: 20px 0;
+  min-height: 27px;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.row {
+  margin: 30px 0;
+}
