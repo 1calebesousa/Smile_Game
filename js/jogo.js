@@ -1,52 +1,65 @@
 let desempenho = 0;
 let tentativas = 0;
 let acertos = 0;
-let jogar = true;
-let rodadaAtiva = false;
+let jogar = true; // Começa desativado
+let rodadaAtiva = true;
 
+const btnIniciar = document.getElementById('iniciar');
 const btnReiniciar = document.getElementById('reiniciar');
 const btnJogarNovamente = document.getElementById('joganovamente');
 const resposta = document.getElementById('resposta');
 
-// Pré-carrega imagens
-const preloadImages = () => {
-  const smileImg = new Image();
-  smileImg.src = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg";
-  
-  const sadImg = new Image();
-  sadImg.src = "./img/sad.png";
+const SMILE_URL = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg";
+const SAD_URL = "./img/sad.png";
+
+const criarImagem = (src, alt) => {
+  const img = new Image();
+  img.src = src;
+  img.alt = alt;
+  img.style.width = "80px";
+  return img;
 };
+
+const resetarCards = () => {
+  document.querySelectorAll(".card").forEach(card => {
+    card.className = "card inicial";
+    card.textContent = card.id;
+  });
+};
+
+const preloadImages = () => {
+  criarImagem(SMILE_URL, "Smile feliz");
+  criarImagem(SAD_URL, "Carinha triste");
+};
+
 
 function reiniciar() {
   desempenho = 0;
   tentativas = 0;
   acertos = 0;
-  jogar = true;
-  rodadaAtiva = false;
-  
-  document.querySelectorAll(".card").forEach(card => {
-    card.className = "card inicial";
-    card.textContent = card.id;
-    card.innerHTML = card.id;
-  });
-  
+  rodadaAtiva = true;
+
+  resetarCards();
   atualizaPlacar();
-  btnJogarNovamente.classList.add('visivel');
+
   btnJogarNovamente.classList.remove('invisivel');
   btnReiniciar.classList.add('invisivel');
-  btnReiniciar.classList.remove('visivel');
+
   resposta.textContent = 'Tente adivinhar aonde está o Sorriso.';
+}
+
+function iniciarJogo() {
+  jogar = true;
+  reiniciar();
+
+  // Oculta botão "Iniciar", mostra "Jogar Novamente"
+  btnIniciar.classList.add('invisivel');
+  btnJogarNovamente.classList.remove('visivel');
 }
 
 function jogarNovamente() {
   rodadaAtiva = true;
-  
-  document.querySelectorAll(".card").forEach(card => {
-    card.className = "card inicial";
-    card.textContent = card.id;
-    card.innerHTML = card.id;
-  });
-  
+  resetarCards();
   resposta.textContent = 'Tente adivinhar novamente!';
 }
 
@@ -62,24 +75,12 @@ function atualizaPlacar() {
 function acertou(card) {
   card.className = "card acertou";
   card.innerHTML = '';
-  
-  const img = new Image();
-  img.src = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg";
-  img.alt = "Smile feliz";
-  img.style.width = "80px";
-  card.appendChild(img);
+  card.appendChild(criarImagem(SMILE_URL, "Smile feliz"));
 }
 
 function verifica(card) {
-  if (!jogar) {
-    alert('Clique em "Reiniciar" para começar novo jogo');
-    return;
-  }
-
-  if (!rodadaAtiva) {
-    alert('Clique em "Jogar novamente" para iniciar');
-    return;
-  }
+  if (!jogar) return alert('Clique em "Iniciar Jogo" para começar');
+  if (!rodadaAtiva) return alert('Clique em "Jogar novamente" para iniciar');
 
   rodadaAtiva = false;
   tentativas++;
@@ -90,20 +91,15 @@ function verifica(card) {
   }
 
   const sorteado = Math.floor(Math.random() * 4);
-  
-  if (card.id == sorteado.toString()) {
+
+  if (card.id === sorteado.toString()) {
     acertou(card);
     acertos++;
     resposta.textContent = "Parabéns! Você acertou!";
   } else {
     card.className = "card errou";
     card.innerHTML = '';
-    
-    const imgErro = new Image();
-    imgErro.src = "./img/sad.png";
-    imgErro.alt = "Carinha triste";
-    imgErro.style.width = "80px";
-    card.appendChild(imgErro);
+    card.appendChild(criarImagem(SAD_URL, "Carinha triste"));
 
     const cardSorteado = document.getElementById(sorteado);
     acertou(cardSorteado);
@@ -114,9 +110,9 @@ function verifica(card) {
 }
 
 // Event listeners
+btnIniciar.addEventListener('click', iniciarJogo);
 btnJogarNovamente.addEventListener('click', jogarNovamente);
 btnReiniciar.addEventListener('click', reiniciar);
 
 // Inicialização
 preloadImages();
-reiniciar();
